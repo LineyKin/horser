@@ -1,0 +1,131 @@
+body {
+	text-align: center;
+	background: black;
+}
+
+#js_info {
+	display: none;
+}
+
+table {
+	margin: 0px auto;
+	border-radius: 5px;
+}
+
+div {
+	margin-top: 10px;
+}
+
+.field, 
+.buttons, 
+#restart, 
+.barrier {
+	border-radius: 0px;
+	height: 47px;
+	font-family: 'Press Start 2P', cursive;
+}
+
+#banner {
+	width: 300px;
+	color: white;
+	border: 1px solid white;
+	font-family: 'Press Start 2P', cursive;
+	margin: 0px auto 10px auto;
+	font-size: 35px;
+	padding: 10px 0px;
+}
+
+#message {
+	margin: 0px auto 20px auto;
+	border: 1px solid white;
+	color: white;
+	width: 200px;
+	padding: 20px 10px;
+	font-size: 20px;
+	border-radius: 0px;
+	font-family: 'Press Start 2P', cursive;
+}
+
+
+.field, 
+.barrier {
+	width: 47px;
+}
+
+#restart {
+	width: 150px;
+	margin-top: 15px;
+	visibility: hidden;
+	background: #F2CE2C;
+	color: #D95A11;
+	width: 200px;
+}
+
+/*#restart:hover {
+	box-shadow: 0 0 20px rgba(255,138,20,0.5);
+}*/
+
+#next {
+	margin-top: 15px;
+	visibility: hidden;
+	background: #6FA667;
+	color: #F2CE2C;
+}
+
+#next:hover {
+	box-shadow: 0 0 20px rgba(242, 206, 44,0.5);
+}
+
+#restart, #next {
+	cursor: pointer;
+	font-size: 20px;
+	border: 0px;
+}
+
+input.field,
+input.barrier {
+	-webkit-appearance: none;
+}
+
+
+.field {
+	background: white;
+	color: white;
+	font-size: 16px;
+	border: 1px solid black;
+}
+
+.barrier {
+	border: 1px solid white;
+}
+
+.barrier, .field {
+	margin: 0px;	
+}
+
+
+
+.level_bar {
+	font-family: 'Press Start 2P', cursive;
+	height: 40px;
+	width: 40px;
+	background: #6FA667;
+	color: #F2CE2C;
+	/*border-radius: 30px;*/
+	border: 0px;
+	cursor: pointer;
+	padding-right: 8px;
+	margin: 0px 1px;
+	font-size: 18px;
+}
+
+#match {
+	background: #F2CE2C;
+	color: #D95A11;
+}
+
+input, 
+input:active, 
+input:focus {
+    outline: none;
+}

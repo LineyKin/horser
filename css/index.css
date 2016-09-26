@@ -1,0 +1,17 @@
+body {
+	text-align: center;
+}
+
+h2 {
+	color: #9BCD9B;
+}
+pre {
+	color: #458B74;
+	font-size: 16pt;
+}
+#play {
+	height: 37px;
+	width: 370px;
+	color: #9BCD9B;
+	font-size: 15pt;
+}

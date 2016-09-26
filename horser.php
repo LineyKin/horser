@@ -67,6 +67,7 @@ function coords_go_index($x,$y) { // связь между индексом эл
 	<link rel="stylesheet" type="text/css" href="css/lvl<?echo $this_level;?>.css">
 	<script src = "js/jquery-1.11.3.js"></script>
 	<script src = "js/config.js"></script>
+	<link rel="SHORTCUT ICON" href="H.png" type="image/x-icon">
 </head>
 <body>
 

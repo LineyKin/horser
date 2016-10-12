@@ -1,6 +1,6 @@
 <?
 session_start();
-require_once 'levels.php'; //конфигурации уровней
+require_once 'php/levels.php'; //конфигурации уровней
 
 if (!isset($_COOKIE['horser_progress'])) {
 	setcookie('horser_progress',0,time()+60*60*24*30*6);

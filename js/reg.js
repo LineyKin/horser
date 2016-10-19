@@ -7,12 +7,12 @@ var reg_data = {
 		regexp: /^\w{2,}$/
 	},
 	password: {
-		elem: document.getElementById('password'),
+		elem: document.getElementById('password'),  
 		regexp: /^\w{6,}$/
 	},
 	email: {
 		elem: document.getElementById('email'),
-		regexp: /^[a-z\.\-]+@{1}\w+\.{1}\w+$/
+		regexp: /^[a-z0-9\.\-\_]+@{1}\w+\.{1}\w+$/
 	}
 };
 
@@ -24,11 +24,13 @@ field.oninput = function() {
 		var v = e.value;
 		var r = new RegExp(reg_data[key].regexp,'ig')
 		if (v.match(r)) {
-			e.style.background = good_bg;
+			e.classList.remove("bad_text");
+			e.classList.add("good_text");
 			count++;
 		}
 		else {
-			e.style.background = 'white';
+			e.classList.remove("good_text");
+			e.classList.add("bad_text");
 		}
 	}
 	if (count == 3) {

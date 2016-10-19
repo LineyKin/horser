@@ -35,7 +35,7 @@ if (isset($_POST['reg'])) {
 	$result = mysqli_query($db_server, $query);
 	$all_rows = mysqli_num_rows($result);
 	if ($all_rows > 0) {
-		die('<div class="die">этот ник занят</div>');
+		die('<div class="die">этот никнейм уже занят</div>');
 	}
 
 	//хешируем пароль

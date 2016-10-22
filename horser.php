@@ -1,6 +1,7 @@
 <?
 session_start();
 require_once 'php/levels.php'; //конфигурации уровней
+require_once 'php/classes.php'; //классы
 
 if (!isset($_COOKIE['horser_progress'])) {
 	setcookie('horser_progress',0,time()+60*60*24*30*6);
@@ -74,18 +75,7 @@ function coords_go_index($x,$y) { // связь между индексом эл
 <form method='POST' action=<?echo $_SERVER['PHP_SELF'];?> >
 	<table id='level_bar'>
 		<tr>
-	<?
-		for ($i=1; $i <= $current_lvl; $i++) {
-			if ($i == $this_level) {
-				$id = "id='match'"; // кнопка активного уровня имеет другой цвет
-			}
-			else {
-				$id = NULL;
-			}
-			echo "
-			<td><input name='previous_$i' type='submit' $id class='level_bar' value='$i'></td>";
-		}
-	?>
+			<?php html::paginator($current_lvl, $this_level);?>
 		</tr>
 	</table>
 </form>
@@ -94,60 +84,11 @@ function coords_go_index($x,$y) { // связь между индексом эл
 
 
 
-
-
-
-
-
 <!-- ******************************** ИГРОВОЕ ПОЛЕ ******************************** -->
-<table id="table" border="0">
-<?
-
-if ($barriers == NULL) {
-	for ($i=0; $i < $h; $i++) { 
-		$r = $i+1;
-		$y = $h-$i;
-		echo "
-		<tr>";
-		for ($j=0; $j < $w; $j++) { 
-			$c = $j+1;
-			echo "
-			<td><input x=$c y=$y type='button' value=' ' class='field'></td>";
-		}
-		echo "
-		</tr>";
-	}
-}
-else {
-	for ($i=0; $i < $h; $i++) { 
-		$r = $i+1;
-		$y = $h-$i;
-		echo "
-		<tr>";
-		for ($j=0; $j < $w; $j++) { 
-			$c = $j+1;
-			$b = coords_go_index($c,$r);
-			if (in_array($b, $barriers)) {
-				echo "
-				<td><input x=$c y=$y type='button' value=' ' class='barrier' disabled='true'></td>";
-			}
-			else {
-				echo "
-				<td><input x=$c y=$y type='button' value=' ' class='field'></td>";
-			}
-		}
-		echo "
-		</tr>";
-	}
-}
-
-?>
+<table id="table">
+	<?php html::game_field($h, $w, $barriers);?>
 </table>
 <!-- ***************************** ИГРОВОЕ ПОЛЕ (КОНЕЦ) ***************************** -->
-
-
-
-
 
 
 
@@ -160,6 +101,8 @@ else {
 		<input type="submit" name="next" id="next" class="buttons" value="На следующий уровень">
 	</form>
 </div>
+
+<div id='to_my_page'><a href="yourpage.php">К себе</a></div>
 
 <table id='js_info'>
 	<tr>

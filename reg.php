@@ -29,6 +29,7 @@ if (isset($_POST['reg'])) {
 	$nickname = $_POST['nickname'];
 	$password = $_POST['password'];
 	$email = $_POST['email'];
+	$today = date("Y-m-d H:i:s"); // момент регистрации
 
 	//проверяем никнейм на индивидуальность
 	$query = "SELECT nickname FROM users WHERE nickname='$nickname'";
@@ -38,17 +39,16 @@ if (isset($_POST['reg'])) {
 		die('<div class="die">этот никнейм уже занят</div>');
 	}
 
+	setcookie('linx_nickname', $nickname, time()+60*60*24*7*4*6, '/');
+
 	//хешируем пароль
 	$db_password = my_hash($password);
 
 	//вносим данные в БД
-	$query = "INSERT INTO users(nickname, password, email) VALUES('$nickname', '$db_password', '$email')";
+	$query = "INSERT INTO users(nickname, password, email, reg_date) 
+			  VALUES('$nickname', '$db_password', '$email', '$today')";
 	mysqli_query($db_server, $query);
-
-	//не допускаем повторную отправку формы:
-	$_POST = NULL;
-	header("Location: ".$_SERVER['PHP_SELF']);
-	exit();	
+	header("Location: yourpage.php");
 }
 ?>
 	<div id='field'>

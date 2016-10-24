@@ -15,7 +15,6 @@ var number = 0;
 var attempt = 1;//счётчик попыток
 var count_H = 0;//количество возможных шагов (H) после последнего клика (для фиксации проигрыша)
 var array_H = [];  //для keyboard_control.js
-var win_table_color  = level_config[conf_level_index]['win_table_color']; //из файла config.js
 
 /*связь между индексом элемента и координатами ходов в поле*/
 function coords_go_index(x,y) {
@@ -72,7 +71,6 @@ buttons.on("click", function() {
 		var next_level = $('#next');
 		next_level.css('visibility', 'visible');
 		restart.hide();
-		table.css('background', win_table_color);
 		message.html('Победа');
 		active_buttons.each( function() {
 			change_css_class(this, 'win');

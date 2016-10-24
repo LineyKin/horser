@@ -1,0 +1,29 @@
+.barrier, .win_barrier {
+	background: #5C199E;
+}
+
+#table{
+	background: #B0170F;
+}
+
+
+
+.H {
+	background: #9DFF00;
+	color: white;
+}
+
+.after_step {
+	background: #022600;
+	color: #022600;
+}
+
+.this_step {
+	background: #022600;
+	color: white;	
+}
+
+.win {
+	background: #9DFF00;
+	color: #9DFF00;
+}

@@ -11,19 +11,6 @@ require_once 'php/db_connect.php';
 $db_server = mysqli_connect($db_host, $db_user);
 mysqli_select_db($db_server, $db_name);
 
-?>
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset='utf-8'>
-	<link rel="SHORTCUT ICON" href="H.png" type="image/x-icon">
-	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/reg.css">
-	<title>Регистрация</title>
-</head>
-<body>
-
-<?
 if (isset($_POST['reg'])) {
 	//берём данные из формы
 	$nickname = $_POST['nickname'];
@@ -38,7 +25,7 @@ if (isset($_POST['reg'])) {
 	if ($all_rows > 0) {
 		die('<div class="die">этот никнейм уже занят</div>');
 	}
-
+	//сохраняем ник в куках на полгода
 	setcookie('linx_nickname', $nickname, time()+60*60*24*7*4*6, '/');
 
 	//хешируем пароль
@@ -46,11 +33,23 @@ if (isset($_POST['reg'])) {
 
 	//вносим данные в БД
 	$query = "INSERT INTO users(nickname, password, email, reg_date) 
-			  VALUES('$nickname', '$db_password', '$email', '$today')";
+	VALUES('$nickname', '$db_password', '$email', '$today')";
 	mysqli_query($db_server, $query);
 	header("Location: yourpage.php");
 }
+
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<link rel="SHORTCUT ICON" href="H.png" type="image/x-icon">
+	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/reg.css">
+	<title>Регистрация</title>
+</head>
+<body>
 	<div id='field'>
 		<form method='POST' atcion=<?echo $_SERVER['PHP_SELF'];?> >
 			<p>nickname</p>

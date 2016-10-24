@@ -21,11 +21,9 @@ for ($i=1; $i <= $current_lvl; $i++) {
 		//не допускаем повторную отправку формы:
 		$_POST = NULL;
 		header("Location: ".$_SERVER["REQUEST_URI"]);
-		exit();
 	}
 }
 /************************************************************/
-
 
 /****************ПЕРЕХОД НА СЛЕДУЮЩИЙ УРОВЕНЬ****************/
 if (isset($_POST['next'])) {
@@ -40,12 +38,12 @@ if (isset($_POST['next'])) {
 	//не допускаем повторную отправку формы:
 	$_POST = NULL;
 	header("Location: ".$_SERVER["REQUEST_URI"]);
-	exit();
 }
 /************************************************************/
 
-
 $this_level = $_SESSION['horser_this_level'];
+
+// конфигурации из levels.php
 $h = $level[$this_level]['h'];
 $w = $level[$this_level]['w'];
 $barriers = $level[$this_level]['barriers'];
@@ -56,7 +54,15 @@ function coords_go_index($x,$y) { // связь между индексом эл
 	$N = $w*($y - 1) + $x - 1;
 	return $N;
 }
+
 ?>
+
+
+
+
+
+
+
 
 <!DOCTYPE HTML>
 <html>
@@ -65,8 +71,8 @@ function coords_go_index($x,$y) { // связь между индексом эл
 	<title>Уровень <?echo $this_level;?></title>
 	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/basis.css">	
-	<link rel="stylesheet" type="text/css" href="css/lvl<?echo $this_level;?>.css">
-	<script src = "js/jquery-1.11.3.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/levels/lvl<?echo $this_level;?>.css">
+	<script src = "js/lib/jquery-1.11.3.js"></script>
 	<script src = "js/config.js"></script>
 	<link rel="SHORTCUT ICON" href="H.png" type="image/x-icon">
 </head>
@@ -74,8 +80,8 @@ function coords_go_index($x,$y) { // связь между индексом эл
 
 <form method='POST' action=<?echo $_SERVER['PHP_SELF'];?> >
 	<table id='level_bar'>
-		<tr>
-			<?php html::paginator($current_lvl, $this_level);?>
+		<tr> <!-- тут СТРОИТСЯ пульт дл перещелкивания уровней, он же пагинатор -->
+			<?php html::paginator($current_lvl, $this_level);?> <!-- classes.php -->
 		</tr>
 	</table>
 </form>
@@ -83,14 +89,11 @@ function coords_go_index($x,$y) { // связь между индексом эл
 <div id="message"><?echo $message;?> поле</div>
 
 
-
 <!-- ******************************** ИГРОВОЕ ПОЛЕ ******************************** -->
 <table id="table">
-	<?php html::game_field($h, $w, $barriers);?>
+	<?php html::game_field($h, $w, $barriers);?> <!-- classes.php -->
 </table>
 <!-- ***************************** ИГРОВОЕ ПОЛЕ (КОНЕЦ) ***************************** -->
-
-
 
 
 <input type="button" id="restart" value="Рестарт" visibility="hidden">
@@ -112,7 +115,7 @@ function coords_go_index($x,$y) { // связь между индексом эл
 </table>
 
 <script src = "js/horser.js"></script>
-<script src = "js/keyboard_control.js"></script>
+<script src = "js/keyboard_control.js"></script> <!-- тут серьёзные баги -->
 
 </body>
 </html>

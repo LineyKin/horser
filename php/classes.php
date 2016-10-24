@@ -10,8 +10,7 @@ class html {
 			else {
 				$id = NULL;
 			}
-			echo "
-			<td><input name='previous_$i' type='submit' $id class='level_bar' value='$i'></td>";
+			echo "<td><input name='previous_$i' type='submit' $id class='level_bar' value='$i'></td>";
 		}
 	}
 
@@ -21,37 +20,30 @@ class html {
 			for ($i=0; $i < $h; $i++) { 
 				$r = $i+1;
 				$y = $h-$i;
-				echo "
-				<tr>";
+				echo "<tr>";
 				for ($j=0; $j < $w; $j++) { 
 					$c = $j+1;
-					echo "
-					<td><input x=$c y=$y type='button' value=' ' class='field'></td>";
+					echo "<td><input x=$c y=$y type='button' value=' ' class='field'></td>";
 				}
-				echo "
-				</tr>";
+				echo "</tr>";
 			}
 		}
 		else {
 			for ($i=0; $i < $h; $i++) { 
 				$r = $i+1;
 				$y = $h-$i;
-				echo "
-				<tr>";
+				echo "<tr>";
 				for ($j=0; $j < $w; $j++) { 
 					$c = $j+1;
 					$b = coords_go_index($c,$r);
 					if (in_array($b, $barriers)) {
-						echo "
-						<td><input x=$c y=$y type='button' value=' ' class='barrier' disabled='true'></td>";
+						echo "<td><input x=$c y=$y type='button' value=' ' class='barrier' disabled='true'></td>";
 					}
 					else {
-						echo "
-						<td><input x=$c y=$y type='button' value=' ' class='field'></td>";
+						echo "<td><input x=$c y=$y type='button' value=' ' class='field'></td>";
 					}
 				}
-				echo "
-				</tr>";
+				echo "</tr>";
 			}
 		}
 	}

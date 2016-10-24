@@ -1,0 +1,24 @@
+#table {
+	background: #27408B;
+}
+
+
+.H {
+	background: #F70;
+	color: white;
+}
+
+.after_step {
+	background: #199E95;
+	color: #199E95;
+}
+
+.this_step {
+	background: #199E95;
+	color: white;	
+}
+
+.win {
+	background: #F70;
+	color: #F70;
+}

@@ -63,6 +63,4 @@ $level = [
 	],
 ];
 
-//$all_levels = count($level);
-
 ?>

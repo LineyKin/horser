@@ -16,7 +16,7 @@ div {
 	margin-top: 10px;
 }
 
-.field, 
+ 
 .buttons, 
 #restart, 
 .barrier {
@@ -47,10 +47,6 @@ div {
 }
 
 
-.field, 
-.barrier {
-	width: 47px;
-}
 
 #restart {
 	width: 150px;
@@ -61,9 +57,6 @@ div {
 	width: 200px;
 }
 
-/*#restart:hover {
-	box-shadow: 0 0 20px rgba(255,138,20,0.5);
-}*/
 
 #next {
 	margin-top: 15px;
@@ -91,8 +84,27 @@ input.barrier {
 .field {
 	background: white;
 	color: white;
+}
+
+
+/*ИГРОВОЕ ПОЛЕ - ОБЩИЕ ПАРАМЕТРЫ*/
+.H, 
+.after_step, 
+.this_step,
+.field,
+.barrier,
+.win {
+	border-radius: 0px;
+	height: 47px;
+	width: 47px;
 	font-size: 16px;
+	font-family: 'Press Start 2P', cursive;
 	border: 1px solid black;
+	
+	/*-moz-transition: all 0.1s ease-out;
+	-webkit-transition: all 0.1s ease-out;
+	-o-transition: all 0.1s ease-out;
+	transition: all 0.1s ease-out;*/
 }
 
 .barrier {
@@ -108,15 +120,14 @@ input.barrier {
 .level_bar {
 	font-family: 'Press Start 2P', cursive;
 	height: 40px;
-	width: 40px;
+	width: 42px;
 	background: #6FA667;
 	color: #F2CE2C;
-	/*border-radius: 30px;*/
 	border: 0px;
 	cursor: pointer;
 	padding-right: 8px;
 	margin: 0px 1px;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 #match {

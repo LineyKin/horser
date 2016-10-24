@@ -1,5 +1,6 @@
+'use strict';
 var buttons = $('#table td input');//все кнопки, включая барьеры
-var field = $('.field');//все кнопки, по которым можно ходить
+var active_buttons = $('.field');//все кнопки, по которым можно ходить
 var restart = $('#restart'); //кнопка рестарта, в случае проигрыша
 var table = $('#table');
 var message = $('#message');
@@ -7,23 +8,14 @@ var conf_level_index = $('#this_level').val()-1;//номер текущего у
 var n = $('#level_width').val();//ширина квадрата (или прямоугольника)
 var h = $("#table tr").length; // высота квадрата (или прямоугольника)
 var all_buttons = buttons.length;
-var last_step = field.length;// количество шагов в уровне (для фиксации победы)
+var last_step = active_buttons.length;// количество шагов в уровне (для фиксации победы)
 var const_message = message.html();
 var fail_message = 'Вы проиграли';
 var number = 0;					
 var attempt = 1;//счётчик попыток
 var count_H = 0;//количество возможных шагов (H) после последнего клика (для фиксации проигрыша)
-var array_H = [];
-
-
-
-/*************************из файла config.js*************************/
-var H_color 		 = level_config[conf_level_index]['H_color'];
-var win_table_color  = level_config[conf_level_index]['win_table_color'];
-var color_after_step = level_config[conf_level_index]['color_after_step'];
-var sign_color 		 = level_config[conf_level_index]['color'];
-
-
+var array_H = [];  //для keyboard_control.js
+var win_table_color  = level_config[conf_level_index]['win_table_color']; //из файла config.js
 
 /*связь между индексом элемента и координатами ходов в поле*/
 function coords_go_index(x,y) {
@@ -31,51 +23,46 @@ function coords_go_index(x,y) {
 	return N;
 }
 
+function change_css_class(obj, class_name) {
+	obj.removeAttribute('class');
+	obj.setAttribute('class', class_name);
+}
 
-/****************КЛАСС СЛЕДУЮЩИХ ШАГОВ (H)******************/
-function next_step(index) {
-	this.background = H_color;
-	this.value = 'H';
-	this.ind = index;
-	this.appear = function() {
-		var x = buttons[this.ind];
-		var regexp = /[0-9]+/;
-		if (!regexp.test(x.value)) {
-			x.style.background = this.background;
-			x.style.color = sign_color;
-			x.value = this.value;
-			x.disabled = false;
-			count_H++;
-			array_H.push(this.ind);
-		};
+
+/*************МЕТОД ПОКАЗА СЛЕДУЮЩИХ ШАГОВ (H)***************/
+function show_next_steps(index) {
+	var x = buttons[index];
+	if (!x.value.match(/[0-9]+/)) {
+		change_css_class(x, "H");
+		x.value = 'H';
+		x.disabled = false;
+		count_H++;
+		array_H.push(index); // для keyboard_control.js
 	};
 };
 /***********************************************************/
 
 
 /******************КОГДА СДЕЛАЛ(А) ШАГ*********************/
-buttons.click( function() {
-	/*if (first_push) {
-		first_push = false;
-		buttons[focus_index].style.background = color_before_focus;
-	};*/
+buttons.on("click", function() {
 	restart.css('visibility', 'visible');
-	field.each( function() {
+	active_buttons.each( function() {
 		$(this).prop('disabled', true);
 		var this_val = $(this).val();
 		if (this_val == 'H') {
 			$(this).val(" ");
-			$(this).css("background", "white");
+			change_css_class(this,'field')
 		};
-		if (this_val != " " && $(this).css("color") != color_after_step && this_val <= number) {
-			$(this).css("color", color_after_step);
+		if (this_val.match(/[0-9]+/) && this_val == number ) {
+			change_css_class(this, 'after_step') //сокрытие цифр
 		};
+
 	});
 
 	number++;
 	message.html('Идёт игра. Попытка '+attempt);
 	if ($(this).attr('class') != 'barrier') {
-		$(this).css("background", color_after_step);
+		change_css_class(this, 'this_step');
 		$(this).val(number);
 		$(this).prop('disabled', true);
 	};
@@ -87,8 +74,8 @@ buttons.click( function() {
 		restart.hide();
 		table.css('background', win_table_color);
 		message.html('Победа');
-		field.each( function() {
-			$(this).css({'background': H_color, 'color': H_color});
+		active_buttons.each( function() {
+			change_css_class(this, 'win');
 		});
 	};
 	/**********************************************/
@@ -115,35 +102,35 @@ buttons.click( function() {
 
 	/********фильтр координат возможных ходов********/
 	for (var i = 0; i < 8; i++) {
-		if (!buttons[possible_step[i]] || buttons[possible_step[i]].className == "barrier") {
+		var pos_step = possible_step[i];
+		if (!buttons[pos_step] || buttons[pos_step].className == "barrier") {
 			continue;
 		};
 		if (n==5) {
-			if (x == 1 && possible_step[i]%n > 2) {
+			if (x == 1 && pos_step%n > 2) {
 				continue;
 			};
-			if (x == 2 && possible_step[i]%n > 3) {
+			if (x == 2 && pos_step%n > 3) {
 				continue;
 			};
-			if (x == 4 && possible_step[i]%n < 1) {
+			if (x == 4 && pos_step%n < 1) {
 				continue;
 			};
-			if (x == 5 && possible_step[i]%n < 2) {
+			if (x == 5 && pos_step%n < 2) {
 				continue;
 			};
 		}
 		else {
-			if (x < 3 && possible_step[i]%n > n - 3) {
+			if (x < 3 && pos_step%n > n - 3) {
 				continue;
 			};
-			if (x > n - 3 && possible_step[i]%n < 2) {
+			if (x > n - 3 && pos_step%n < 2) {
 				continue;
 			};
 		};
 		
 		/**появление возможных ходов после фильтрации**/
-		var H = new next_step(possible_step[i]);
-		H.appear();
+		show_next_steps(pos_step);
 	};
 	if (count_H == 0 && number != last_step) {
 		message.html(fail_message);
@@ -159,11 +146,11 @@ buttons.click( function() {
 
 
 /*************************ЧИСТИЛЬЩИК*************************/
-restart.click( function() {
+restart.on("click", function() {
 	$(this).css('visibility', 'hidden');
-	field.each( function() {
-		$(this).css({'background':'white',color:sign_color});
+	active_buttons.each( function() {
 		$(this).prop('disabled', false);
+		change_css_class(this, 'field');
 		$(this).val(" ");
 	});
 	number = 0;
